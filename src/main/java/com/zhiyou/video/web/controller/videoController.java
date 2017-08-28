@@ -111,8 +111,7 @@ public class videoController {
 	    for(int i=0;i<checkrow.length;i++){
 	    	System.out.println(checkrow[i]);	    
 	    	//vs.deleteVideoById(Integer.parseInt(checkrow[i]));
-	    }
-          	
+	    }          	
 		return "redirect:/video/videoList.action";	
 	}
 	
