@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>校验</title>
+<script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="js/messages_zh.min.js"></script>
+<script type="text/javascript">
+$(function(){
+	
+
+      $('#form1').validate({
+    	 
+              rules:{
+            	  username:{
+            		  required:true,
+            		  rangelength:[3,6]
+            	  },
+            	  pwd:{
+            		  required:true
+            	  },
+            	  rpwd:{
+            		  required:true,
+            		  equalTo:"#pwd"
+            	  }
+              },
+              messages:{
+            	  username:{
+            		  required:"用户名不能为空！"
+            	  },
+            	  pwd:{
+            		  required:"密码不能为空!"
+            	  },
+            	  rpwd:{
+            		  required:"确认密码不能为空 !",
+            		  equalTo:"输入密码不一致！ "
+            	  }
+              
+              }
+           
+    	
+              
+              
+    	
+    	 
+    	 
+     });	
+});
+
+function sub(){
+	alert($('#form1').serialize());
+	return false;
+};
+
+
+
+</script>
+</head>
+<body>
+<form action="#" id="form1" onsubmit="return sub()">
+<table>
+<tr>
+       <td align="right">用户名：</td>
+       <td><input type="text" name="username"></td>
+       
+</tr>
+
+<tr>
+       <td align="right">密码：</td>
+       <td><input type="text" name="pwd" id="pwd"></td>
+       
+</tr>
+
+<tr>
+       <td align="right">确认密码：</td>
+       <td><input type="text" name="rpwd"></td>
+       
+</tr>
+
+<tr>
+       <td align="right"></td>
+       <td><input type="submit" value="提交" ></td>
+       
+</tr>
+
+</table>
+</form>
+</body>
+</html>
