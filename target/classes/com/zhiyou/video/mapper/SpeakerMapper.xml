@@ -264,6 +264,9 @@ select * from speaker
 limit ${(page-1)*10} , 10
 </select>  
   
+<select id="findSpeakerByVideoId" resultMap="BaseResultMap">
+select speaker.* from speaker,video where speaker_id=speaker.id and video.id=${videoId} 
+</select>  
   
   
 </mapper>

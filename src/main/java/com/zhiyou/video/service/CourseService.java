@@ -18,4 +18,12 @@ public interface CourseService {
 
 	void deleteCourseById(Integer id);
 
+	List<Course> FindAllCourseWithVideos();
+
+	Course findCourseByVideoId(Integer videoId);
+
+	List<Course> FindAllCourseBySubjectId(Integer subjectId);
+
+	
+
 }

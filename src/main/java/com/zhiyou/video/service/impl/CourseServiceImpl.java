@@ -39,5 +39,20 @@ public class CourseServiceImpl implements CourseService {
 	public void deleteCourseById(Integer id) {
 		cm.deleteByPrimaryKey(id);
 	}
+	@Override
+	public List<Course> FindAllCourseWithVideos() {
+		
+		return cm.findAllCourseWithVideos();
+	}
+	@Override
+	public Course findCourseByVideoId(Integer videoId) {
+	   Course course=cm.findCourseByVideoId(videoId);
+		return course;
+	}
+	@Override
+	public List<Course> FindAllCourseBySubjectId(Integer subjectId) {
+	
+		return cm.findAllCourseBySubjectId(subjectId);
+	}
 
 }

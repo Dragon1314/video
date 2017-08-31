@@ -1,6 +1,8 @@
 package com.zhiyou.video.model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.zhiyou.video.utils.MD5Util;
 
 public class User {
     private Integer id;
@@ -9,6 +11,7 @@ public class User {
 
     private Integer sex;
 
+    
     private Date birthday;
 
     private String email;
@@ -23,6 +26,7 @@ public class User {
 
     private Date insertTime;
 
+    
     private Date updateTime;
 
     private String captcha;
@@ -51,8 +55,10 @@ public class User {
         this.sex = sex;
     }
 
-    public Date getBirthday() {
-        return birthday;
+    public String getBirthday() {
+    	SimpleDateFormat df=new SimpleDateFormat("yyyy-MM-dd");
+    	
+        return df.format(birthday);
     }
 
     public void setBirthday(Date birthday) {
@@ -96,7 +102,13 @@ public class User {
     }
 
     public void setPassword(String password) {
-        this.password = password == null ? null : password.trim();
+    	MD5Util md5=new MD5Util();
+    	
+        this.password = password == null ? null : md5.getMD5(password.trim());
+
+    	
+        //this.password = password == null ? null : password.trim();
+    
     }
 
     public Date getInsertTime() {
@@ -122,4 +134,12 @@ public class User {
     public void setCaptcha(String captcha) {
         this.captcha = captcha == null ? null : captcha.trim();
     }
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", nickName=" + nickName + ", sex=" + sex + ", birthday=" + birthday + ", email="
+				+ email + ", province=" + province + ", city=" + city + ", headUrl=" + headUrl + ", password="
+				+ password + ", insertTime=" + insertTime + ", updateTime=" + updateTime + ", captcha=" + captcha + "]";
+	}
+    
 }

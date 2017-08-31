@@ -16,6 +16,10 @@ public class SubjectServiceImpl implements SubjectService {
 	public List<Subject> findAllSubject() {
 		return sm.selectByExample(null);
 	}
+	@Override
+	public Subject FindSubjectNameById(Integer subjectId) {		
+		return sm.selectByPrimaryKey(subjectId);
+	}
 
 
 }

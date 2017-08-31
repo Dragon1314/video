@@ -60,4 +60,10 @@ public class VideoServiceImpl implements VideoService {
 		return list;
 	}
 
+	@Override
+	public List<Video> findAllVideoByCourseId(Integer id) {
+       List<Video> vlist=vm.findAllVideoByCourseId(id);
+		return vlist;
+	}
+
 }

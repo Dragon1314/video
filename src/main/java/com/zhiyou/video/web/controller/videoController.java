@@ -14,6 +14,7 @@ import com.zhiyou.video.model.Speaker;
 import com.zhiyou.video.model.Video;
 import com.zhiyou.video.service.CourseService;
 import com.zhiyou.video.service.SpeakerService;
+import com.zhiyou.video.service.SubjectService;
 import com.zhiyou.video.service.VideoService;
 import com.zhiyou.video.utils.Page;
 
@@ -26,9 +27,11 @@ public class videoController {
 	SpeakerService ss;
 	@Autowired
 	CourseService cs;
+	@Autowired
+	SubjectService sss;
 	
 	
-	@RequestMapping({"/admin/videoList.action","/video/videoList.action"})
+	@RequestMapping({"/admin/videoList.action","/admin/video/videoList.action"})
 	public String videoList(HttpServletRequest request,@RequestParam(defaultValue="1")Integer page,@RequestParam(defaultValue="")String videoTitle,@RequestParam(defaultValue="")Integer speakerId,@RequestParam(defaultValue="")Integer courseId ){
 		List<Video> vlist=vs.findAllVideo();
 		request.setAttribute("videoList", vlist);
@@ -42,7 +45,7 @@ public class videoController {
 		request.setAttribute("speakerId", speakerId);		
 		request.setAttribute("courseId", courseId);
 		
-		return "video/videoList";
+		return "/admin/video/videoList";
 		/*return "forward:/WEB-INF/video/videoList.jsp";*/
 		
 	}
@@ -64,22 +67,22 @@ public class videoController {
 	}*/
 	
 	
-	@RequestMapping(value="/video/addVideo.action",method=RequestMethod.GET)
+	@RequestMapping(value="/admin/video/addVideo.action",method=RequestMethod.GET)
 	public String addVideoPage(HttpServletRequest request){
 		List<Speaker> slist=ss.findAllSpeaker();
 		request.setAttribute("speakerList", slist);
 		List<Course> clist=cs.findAllCourse();
 		request.setAttribute("courseList",clist);		
-		return "forward:/WEB-INF/video/addVideo.jsp";
+		return "forward:/WEB-INF/adminvideo/addVideo.jsp";
 	}
-	@RequestMapping(value="/video/addVideo.action",method=RequestMethod.POST)
+	@RequestMapping(value="/admin/video/addVideo.action",method=RequestMethod.POST)
 	public String addVideo(Video video){
 		vs.addVideo(video);
 		return "redirect:/admin/videoList.action";
 	}
 	
 
-	@RequestMapping("/video/editVideo.action")
+	@RequestMapping("/admin/video/editVideo.action")
 	public String editVideo(HttpServletRequest request ,@RequestParam("upid")Integer id){
         Video video=vs.findVideoById(id);
         request.setAttribute("video",video);
@@ -89,35 +92,35 @@ public class videoController {
 		
         List<Course> clist=cs.findAllCourse();
 		request.setAttribute("courseList", clist);
-		return "forward:/WEB-INF/video/editVideo.jsp";
+		return "forward:/WEB-INF/adminvideo/editVideo.jsp";
 	}
 	
-	@RequestMapping("/video/updateVideo.action")
+	@RequestMapping("/admin/video/updateVideo.action")
 	public String updateVideo(Video video){
          vs.updateVideo(video);
 		return "redirect:/admin/videoList.action";
 	}
 	
 	
-	@RequestMapping("/video/deleteVideo.action")
+	@RequestMapping("/admin/video/deleteVideo.action")
 	public String deleteVideo(@RequestParam("delid")Integer id){
          vs.deleteVideoById(id);
 		return "redirect:/admin/videoList.action";
 	}
 	
 	
-	@RequestMapping("/video/deleteVideos.action")
+	@RequestMapping("/admin/video/deleteVideos.action")
 	public String deleteVideos(HttpServletRequest request,String[] checkrow){
 	    for(int i=0;i<checkrow.length;i++){
 	    	System.out.println(checkrow[i]);	    
 	    	//vs.deleteVideoById(Integer.parseInt(checkrow[i]));
 	    }
           	
-		return "redirect:/video/videoList.action";	
+		return "redirect:/admin/video/videoList.action";	
 	}
 	
 	
-	@RequestMapping("/analysis/analysis.action")
+	@RequestMapping("/admin/analysis/analysis.action")
 	public String analysis(HttpServletRequest request){
 		List<Video> vidlist=vs.findCourseWithPlayTimes();
 		List<String> titleList=new ArrayList<String>();
@@ -131,7 +134,49 @@ public class videoController {
 		
 		request.setAttribute("titles",titleList);
 		request.setAttribute("times", timeList);
-		return "forward:/WEB-INF/analysis/analysis.jsp";
+		return "forward:/WEB-INF/admin/analysis/analysis.jsp";
 	}
 
+	
+	
+  @RequestMapping("/front/video/index.do")
+  public String frontVideo(HttpServletRequest request,Integer videoId,Integer subjectId){
+	  System.out.println(videoId);
+	  System.out.println(subjectId);
+	  
+	  request.setAttribute("subject",sss.FindSubjectNameById(subjectId));
+	  request.setAttribute("videoId", videoId);
+	  return "forward:/WEB-INF/front/video/index.jsp";
+  }
+	
+  @RequestMapping("/front/video/videoData.do")
+  public String videoContent(Integer videoId,HttpServletRequest request){
+	 Video video=vs.findVideoById(videoId);
+	 Speaker speaker=ss.findSpeakerByVideoId(videoId);
+	 Course course=cs.findCourseByVideoId(videoId);
+	 
+	 System.out.println(video);
+	 System.out.println(speaker);
+	 System.out.println(course);
+	 List<Video> videoList=vs.findAllVideoByCourseId(speaker.getId());
+	 for(Video v:videoList){
+		 v.setVideoLengthStr(v.getVideoLength());
+	 }
+	 System.out.println(videoList);
+	 request.setAttribute("video", video);
+	  request.setAttribute("speaker",speaker);
+	  request.setAttribute("course", course);
+	  request.setAttribute("videoList", videoList);
+	  return "forward:/WEB-INF/front/video/content.jsp";
+  }
+  
+      @RequestMapping("/front/video/state.do")
+      public void hitCount(Integer videoId){
+    	 Video video=vs.findVideoById(videoId);
+    	 video.setVideoPlayTimes(video.getVideoPlayTimes()+1);
+    	 vs.updateVideo(video);
+     }
+  
+	
+	
 }

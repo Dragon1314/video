@@ -51,4 +51,10 @@ public class SpeakerServiceImpl implements SpeakerService {
 		sm.deleteByPrimaryKey(id);
 	}
 
+	@Override
+	public Speaker findSpeakerByVideoId(Integer videoId) {
+	 Speaker speaker=sm.findSpeakerByVideoId(videoId);
+		return speaker;
+	}
+
 }

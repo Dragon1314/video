@@ -33,4 +33,6 @@ public interface VideoMapper {
 	List<Video> findAllVideo(@Param("videoTitle")String videoTitle, @Param("speakerId")Integer speakerId, @Param("courseId")Integer courseId,@Param("page")Integer page);
 
 	List<Video> findCourseWithPlayTimes();
+
+	List<Video> findAllVideoByCourseId(@Param("id")Integer id);
 }

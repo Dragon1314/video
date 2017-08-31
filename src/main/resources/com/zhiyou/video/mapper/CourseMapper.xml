@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.zhiyou.video.mapper.CourseMapper" >
   <resultMap id="BaseResultMap" type="com.zhiyou.video.model.Course" >
     <id column="id" property="id" jdbcType="INTEGER" />
@@ -8,6 +9,15 @@
     <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
     <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
     <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+
+    <collection property="videoList" ofType="com.zhiyou.video.model.Video">
+    <id column="id" property="id"/>
+    <result column="video_image_url" property="videoImageUrl"/>
+    <result column="video_title" property="videoTitle"/>
+    <result column="video_paly_times" property="videoPlayTimes"/>
+    <result column="video_length" property="videoLength"/>
+    </collection>
+
   </resultMap>
   <sql id="Example_Where_Clause" >
     <where >
@@ -230,5 +240,48 @@
 select course.*,subject_name as subjectName from course,subject 
 where subject_id=subject.id 
 </select>  
+
+<select id="findAllCourseWithVideos" resultMap="BaseResultMap">
+select course_name,course_descr,v.id,v.video_image_url,v.video_title,v.video_play_times,v.video_length 
+from course,video v
+where course.id=v.course_id 
+</select>  
+
+  <resultMap id="CourseResultMap" type="com.zhiyou.video.model.Course" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_descr" property="courseDescr" jdbcType="VARCHAR" />
+    <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+  </resultMap>
+<select id="findCourseByVideoId" resultMap="CourseResultMap">
+select course.* from course,video where course_id=course.id and video.id=${videoId}
+</select> 
+ 
+  
+<resultMap type="com.zhiyou.video.model.Course" id="subjectMap">
+    <result column="course_name" property="courseName" jdbcType="VARCHAR" />
+    <result column="course_descr" property="courseDescr" jdbcType="VARCHAR" />
+    <result column="insert_time" property="insertTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="subject_id" property="subjectId" jdbcType="INTEGER" />
+    <collection property="videoList" ofType="com.zhiyou.video.model.Video">
+    <id column="id" property="id"/>
+    <result column="video_image_url" property="videoImageUrl"/>
+    <result column="video_title" property="videoTitle"/>
+    <result column="video_paly_times" property="videoPlayTimes"/>
+    <result column="video_length" property="videoLength"/>
+    </collection>
+
+
+</resultMap> 
+
+<select id="findAllCourseBySubjectId" resultMap="subjectMap">
+select course_name,course_descr,v.id,v.video_image_url,v.video_title,v.video_play_times,v.video_length 
+from course,video v
+where course.id=v.course_id AND subject_id=${subjectId}
+</select> 
+  
   
 </mapper>

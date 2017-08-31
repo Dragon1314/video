@@ -19,4 +19,8 @@ public interface SpeakerService {
 
 	void deleteSpeaker(Integer id);
 
+	Speaker findSpeakerByVideoId(Integer videoId);
+
+	
+
 }

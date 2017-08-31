@@ -339,9 +339,15 @@ limit ${(page-1)*10} , 10
 </select>
   
 <select id="findCourseWithPlayTimes" resultMap="BaseResultMap">
-select video_title,avg(video_play_times)as playTimes from video 
-group by video_title
+select course_name as video_title,avg(video_play_times) as playTimes
+from video,course where course_id=course.id
+group by course_name
 </select>  
   
+<select id="findAllVideoByCourseId" resultMap="BaseResultMap">
+select video.*,speaker_name as speakerName from video,course,speaker 
+WHERE course_id=course.id AND speaker_id=speaker.id AND speaker.id=${id}
+</select> 
+ 
   
 </mapper>

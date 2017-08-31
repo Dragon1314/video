@@ -29,4 +29,10 @@ public interface CourseMapper {
     int updateByPrimaryKey(Course record);
 
 	List<Course> findAllCourseWithSubjectName();
+
+	List<Course> findAllCourseWithVideos();
+
+	Course findCourseByVideoId(@Param("videoId")Integer videoId);
+
+	List<Course> findAllCourseBySubjectId(@Param("subjectId")Integer subjectId);
 }

@@ -21,4 +21,6 @@ public interface VideoService {
 
 	public List<Video> findCourseWithPlayTimes();
 
+	public List<Video> findAllVideoByCourseId(Integer id);
+
 }

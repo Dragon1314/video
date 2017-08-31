@@ -36,7 +36,12 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 
 <mvc:interceptors>
 <mvc:interceptor>
-<mvc:mapping path="/**"/>
+<mvc:mapping path="/admin/**"/>
+<mvc:mapping path="/front/**"/>
+<mvc:exclude-mapping path="/front/course/index.do"/>
+<mvc:exclude-mapping path="/front/video/index.do"/>
+<mvc:exclude-mapping path="/front/video/videoData.do"/>
+<mvc:exclude-mapping path="/front/video/state.do"/>
 <!-- <mvc:exclude-mapping path="/css/**"/>
 <mvc:exclude-mapping path="/image/**"/>
 <mvc:exclude-mapping path="/js/**"/>

@@ -320,4 +320,16 @@
       captcha = #{captcha,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+<insert id="addUser">
+insert into user(id,email,password) values(null,#{email},#{password}); 
+</insert>
+  
+ <update id="updateInfo">
+ update user set nick_name=#{nickName},sex=${sex},birthday=#{birth},province=#{province},city=#{city},head_url=#{head} where email=#{email}
+ </update> 
+ 
+ <update id="resetPwd">
+ update user set password=#{password} where email=#{email}
+ </update>
+  
 </mapper>

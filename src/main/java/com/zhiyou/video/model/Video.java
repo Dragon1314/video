@@ -2,6 +2,8 @@ package com.zhiyou.video.model;
 
 import java.util.Date;
 
+import com.zhiyou.video.utils.VideoLengthUtil;
+
 public class Video {
     private Integer id;
 
@@ -31,10 +33,20 @@ public class Video {
     
     private int playTimes;
     
+    private String videoLengthStr;
+    
     
     
 
-    public int getPlayTimes() {
+    public String getVideoLengthStr() {
+		return videoLengthStr;
+	}
+
+	public void setVideoLengthStr(Integer videoLength) {
+		this.videoLengthStr = VideoLengthUtil.getVideoTime(videoLength);
+	}
+
+	public int getPlayTimes() {
 		return playTimes;
 	}
 
@@ -75,6 +87,7 @@ public class Video {
     }
 
     public Integer getSpeakerId() {
+    	
         return speakerId;
     }
 

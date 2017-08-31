@@ -16,7 +16,7 @@ public class adminController {
 	@Autowired
 	AdminService as;
 	
-	@RequestMapping("/adminLogin.action")
+	@RequestMapping("/admin/adminLogin.action")
 	public String adminLogin(Admin admin,HttpServletRequest request ) throws Exception{
 		String password=admin.getLoginPwd();
 		System.out.println(password);
@@ -29,14 +29,20 @@ public class adminController {
 			System.out.println(admin1);
 			return "forward:/admin/videoList.action";
 		}else{
-			return "redirect:/index.jsp"; 
+			return "redirect:/admin/index.jsp"; 
 		}		
 	}
 
-	@RequestMapping({"/logout.action","/admin/logout.action"})
+	@RequestMapping({"/admin/logout.action","/admin/logout.action"})
 	public String logout(HttpSession session){
 		session.invalidate();
-		return "redirect:/index.jsp";
+		return "redirect:/admin/adminlog.action";
+	}
+	
+	
+	@RequestMapping("/admin/adminlog.action")
+	public String adminLog(){
+		return "forward:/WEB-INF/admin/index.jsp";
 	}
 	
 	
