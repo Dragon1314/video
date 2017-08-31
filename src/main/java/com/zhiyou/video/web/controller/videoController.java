@@ -60,8 +60,7 @@ public class videoController {
 		List<Course> clist=cs.findAllCourse();
 		request.setAttribute("courseList",clist);
 		Page pageInfo=vs.findAllVideo(videoTitle,speakerId,courseId,page);
-		request.setAttribute("page", pageInfo);
-		
+		request.setAttribute("page", pageInfo);	
 		return "video/videoList";
 	
 	}*/
