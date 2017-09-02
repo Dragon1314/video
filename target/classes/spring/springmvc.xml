@@ -24,7 +24,10 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 </set>
 </property>
 </bean>
-
+<!-- 
+<mvc:default-servlet-handler/>
+<mvc:resources location="" mapping=""></mvc:resources>
+ -->
 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 <property name="prefix" value="/WEB-INF/"></property>
 <property name="suffix" value=".jsp"></property>
@@ -37,20 +40,43 @@ http://www.springframework.org/schema/mvc http://www.springframework.org/schema/
 <mvc:interceptors>
 <mvc:interceptor>
 <mvc:mapping path="/admin/**"/>
-<mvc:mapping path="/front/**"/>
-<mvc:exclude-mapping path="/front/course/index.do"/>
+<mvc:exclude-mapping path="/admin/course/index.do"/>
 <mvc:exclude-mapping path="/front/video/index.do"/>
 <mvc:exclude-mapping path="/front/video/videoData.do"/>
 <mvc:exclude-mapping path="/front/video/state.do"/>
+<mvc:exclude-mapping path="/admin/videoList.action"/>
+<mvc:exclude-mapping path="/admin/video/**"/>
+<mvc:exclude-mapping path="/admin/speaker/**"/>
+<mvc:exclude-mapping path="/admin/course/**"/>
+<mvc:exclude-mapping path="/admin/analysis/**"/>
 <!-- <mvc:exclude-mapping path="/css/**"/>
 <mvc:exclude-mapping path="/image/**"/>
 <mvc:exclude-mapping path="/js/**"/>
 <mvc:exclude-mapping path="/lib/**"/>
  -->
 
-<bean class="com.zhiyou.video.web.interceptor.LogInterceptor" />
+<bean class="com.zhiyou.video.web.interceptor.AdminLoginInteceptor" />
+
+<!-- <bean class="com.zhiyou.video.web.interceptor.LogInterceptor" /> -->
 </mvc:interceptor>
 
+<mvc:interceptor>
+<mvc:mapping path="/front/**"/>
+<mvc:exclude-mapping path="/front/course/index.do"/>
+<mvc:exclude-mapping path="/front/video/index.do"/>
+<mvc:exclude-mapping path="/front/video/videoData.do"/>
+<mvc:exclude-mapping path="/front/video/state.do"/>
+<mvc:exclude-mapping path="/front/user/**"/>
+<!-- <mvc:exclude-mapping path="/css/**"/>
+<mvc:exclude-mapping path="/image/**"/>
+<mvc:exclude-mapping path="/js/**"/>
+<mvc:exclude-mapping path="/lib/**"/>
+ -->
+
+
+<bean class="com.zhiyou.video.web.interceptor.FrontUserLoginInteceptor" />
+<!-- <bean class="com.zhiyou.video.web.interceptor.LogInterceptor" /> -->
+</mvc:interceptor>
 
 </mvc:interceptors>
 

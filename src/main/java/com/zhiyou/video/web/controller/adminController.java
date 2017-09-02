@@ -35,7 +35,7 @@ public class adminController {
 
 	@RequestMapping({"/admin/logout.action","/admin/logout.action"})
 	public String logout(HttpSession session){
-		session.invalidate();
+		session.removeAttribute("logAdmin");
 		return "redirect:/admin/adminlog.action";
 	}
 	

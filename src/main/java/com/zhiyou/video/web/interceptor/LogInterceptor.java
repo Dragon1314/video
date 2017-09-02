@@ -29,7 +29,7 @@ public class LogInterceptor implements HandlerInterceptor{
 		Admin admin=(Admin) request.getSession().getAttribute("logAdmin");
 		User user=(User) request.getSession().getAttribute("user");
 		if(admin==null && user==null){
-			if(request.getServletPath().equals("/front/index.action")|| request.getServletPath().endsWith("/front/user/login.do") || request.getServletPath().endsWith("/front/user/regist.action")|| request.getServletPath().endsWith("/admin/adminlog.action")){
+			if(request.getServletPath().equals("/front/index.action")|| request.getServletPath().endsWith("/front/user/login.do") || request.getServletPath().endsWith("/front/user/regist.action")|| request.getServletPath().endsWith("/admin/adminlog.action")|| request.getServletPath().endsWith("/admin/adminLogin.action")){
 				System.out.println("登录放行。。。。。。。。。");
 				return true;
 			}else{

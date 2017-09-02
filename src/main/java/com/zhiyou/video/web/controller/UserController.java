@@ -94,7 +94,7 @@ public class UserController {
 	////////
 	@RequestMapping("/front/user/logout.do")
 	public String userout(HttpSession session){
-		session.invalidate();
+		session.removeAttribute("user");
 		return "redirect:/front/index.action";				
 	}
 	
@@ -216,6 +216,7 @@ public String pfofileupdate(User u,String birthdaystr,String email) throws Excep
 	public String sendm(String email) throws Exception{
 		System.out.println(email);
 		Random random=new Random();
+		
 		int verify=random.nextInt(999999);
 		User use=us.findUserByEmail(email);
 		use.setCaptcha(String.valueOf(verify));
